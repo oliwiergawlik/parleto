@@ -21,4 +21,28 @@ const expenses = {
     "2023-04": {}
 };
 
+function getFirstSunday(year, month){
+    const yearNum = parseInt(year);
+    const monthNum = parseInt(month);
+    
+    const firstDay = new Date(yearNum, monthNum - 1, 1);
+    const firstSunday = new Date(yearNum, monthNum - 1, 1 + (7 - firstDay.getDay()) % 7);
+
+    return firstSunday.getDate();
+}
+
+
+function solution(expenses){
+    const result = {};
+    
+    for (const date in expenses){
+        const [year, month] = date.split('-')
+        const firstSunday = getFirstSunday(year, month);
+        
+        
+    }
+    
+    return result;
+}
+
 console.log(solution(expenses))
