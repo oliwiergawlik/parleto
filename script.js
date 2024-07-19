@@ -34,10 +34,24 @@ function getFirstSunday(year, month){
 function getExpenses(expenses) {
     let expArr = [];
     for (const category in expenses) {
-        expArr = expArr.concat(expenses[category])
+        expArr = expArr.concat(expenses[category]);
     }
     
     return expArr;
+}
+
+function getMedian(numbers) {
+    if (numbers.length === 0) return 0;
+    numbers.sort((a, b) => a - b);
+    
+    const n = Math.floor(numbers.length);
+    const middle = Math.floor(n / 2);
+    
+   if (n % 2 === 0) {
+       return (numbers[middle - 1] + numbers[middle]) / 2;
+   } else {
+       return numbers[middle]
+   }
 }
 
 
@@ -48,13 +62,15 @@ function solution(expenses){
         const [year, month] = date.split('-');
         const firstSunday = getFirstSunday(year, month);
 
-        let allExpenses = [];
+        let dateExpenses = [];
 
         for (const day in expenses[date]) {
             if (Number(day) <= firstSunday) {
-                allExpenses = allExpenses.concat(getExpenses(expenses[date][day]))
+                dateExpenses = dateExpenses.concat(getExpenses(expenses[date][day]))
             }
         }
+
+        result[date] = Math.round(getMedian(dateExpenses) * 100) / 100;
     }
     
     return result;
