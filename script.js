@@ -31,15 +31,30 @@ function getFirstSunday(year, month){
     return firstSunday.getDate();
 }
 
+function getExpenses(expenses) {
+    let expArr = [];
+    for (const category in expenses) {
+        expArr = expArr.concat(expenses[category])
+    }
+    
+    return expArr;
+}
+
 
 function solution(expenses){
     const result = {};
     
     for (const date in expenses){
-        const [year, month] = date.split('-')
+        const [year, month] = date.split('-');
         const firstSunday = getFirstSunday(year, month);
-        
-        
+
+        let allExpenses = [];
+
+        for (const day in expenses[date]) {
+            if (Number(day) <= firstSunday) {
+                allExpenses = allExpenses.concat(getExpenses(expenses[date][day]))
+            }
+        }
     }
     
     return result;
