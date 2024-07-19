@@ -31,15 +31,6 @@ function getFirstSunday(year, month){
     return firstSunday.getDate();
 }
 
-// function getExpenses(expenses) {
-//     let expArr = [];
-//     for (const category in expenses) {
-//         expArr = expArr.concat(expenses[category]);
-//     }
-//    
-//     return expArr;
-// }
-
 function getMedian(numbers) {
     if (!Array.isArray(numbers)) numbers = Object.values(numbers);
     if (numbers.length === 0) return 0;
