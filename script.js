@@ -21,10 +21,6 @@ const expenses = {
     "2023-04": {}
 };
 
-console.log(solution(expenses));
-
-//----------------
-
 function getFirstSunday(year, month){
     const yearNum = parseInt(year);
     const monthNum = parseInt(month);
@@ -78,3 +74,5 @@ function solution(expenses){
     
     return result;
 }
+
+console.log(solution(expenses));
