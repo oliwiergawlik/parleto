@@ -22,37 +22,35 @@ const expenses = {
 };
 
 function getFirstSunday(year, month){
-    const yearNum = parseInt(year);
-    const monthNum = parseInt(month);
+    const yearNum = parseInt(year, 10);
+    const monthNum = parseInt(month, 10) - 1;
     
-    const firstDay = new Date(yearNum, monthNum - 1, 1);
-    const firstSunday = new Date(yearNum, monthNum - 1, 1 + (7 - firstDay.getDay()) % 7);
+    const firstDay = new Date(yearNum, monthNum, 1);
+    const firstSunday = new Date(yearNum, monthNum, 1 + (7 - firstDay.getDay()) % 7);
 
     return firstSunday.getDate();
 }
 
-function getExpenses(expenses) {
-    let expArr = [];
-    for (const category in expenses) {
-        expArr = expArr.concat(expenses[category]);
-    }
-    
-    return expArr;
-}
+// function getExpenses(expenses) {
+//     let expArr = [];
+//     for (const category in expenses) {
+//         expArr = expArr.concat(expenses[category]);
+//     }
+//    
+//     return expArr;
+// }
 
 function getMedian(numbers) {
-    numbers = Array.isArray(numbers) ? numbers : Object.values(numbers);
+    if (!Array.isArray(numbers)) numbers = Object.values(numbers);
     if (numbers.length === 0) return 0;
+    
     numbers.sort((a, b) => a - b);
-
-    const n = Math.floor(numbers.length);
+    const n = numbers.length;
     const middle = Math.floor(n / 2);
 
-   if (n % 2 === 0) {
-       return (numbers[middle - 1] + numbers[middle]) / 2;
-   } else {
-       return numbers[middle];
-   }
+    return n % 2 === 0
+        ? (numbers[middle - 1] + numbers[middle]) / 2
+        : numbers[middle];
 }
 
 function solution(expenses){
@@ -66,11 +64,13 @@ function solution(expenses){
 
         for (const day in expenses[date]) {
             if (Number(day) <= firstSunday) {
-                dateExpenses = dateExpenses.concat(getExpenses(expenses[date][day]));
+                for (const category in expenses[date][day]) {
+                    dateExpenses = dateExpenses.concat(expenses[date][day][category]);
+                }
             }
         }
 
-        result[date] = Math.round(getMedian(dateExpenses) * 100) / 100;
+        result[date] = getMedian(dateExpenses);
     }
     
     return getMedian(result);
