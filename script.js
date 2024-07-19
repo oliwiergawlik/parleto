@@ -41,12 +41,13 @@ function getExpenses(expenses) {
 }
 
 function getMedian(numbers) {
+    numbers = Array.isArray(numbers) ? numbers : Object.values(numbers);
     if (numbers.length === 0) return 0;
     numbers.sort((a, b) => a - b);
-    
+
     const n = Math.floor(numbers.length);
     const middle = Math.floor(n / 2);
-    
+
    if (n % 2 === 0) {
        return (numbers[middle - 1] + numbers[middle]) / 2;
    } else {
@@ -72,7 +73,7 @@ function solution(expenses){
         result[date] = Math.round(getMedian(dateExpenses) * 100) / 100;
     }
     
-    return result;
+    return getMedian(result);
 }
 
 console.log(solution(expenses));
